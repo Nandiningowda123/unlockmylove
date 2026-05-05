@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For My Love ❤️</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      text-align: center;
+      background: linear-gradient(to right, #ff9a9e, #fad0c4);
+      overflow: hidden;
+    }
+
+    .login, .content {
+      margin-top: 80px;
+    }
+
+    input, button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background: #ff4d6d;
+      color: white;
+      cursor: pointer;
+    }
+
+    .content { display: none; }
+
+    /* Slideshow */
+    .slideshow {
+      width: 280px;
+      height: 280px;
+      margin: 20px auto;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      display: none;
+      object-fit: cover;
+    }
+
+    /* Typing */
+    #typing {
+      font-size: 20px;
+      width: 80%;
+      margin: auto;
+      min-height: 60px;
+    }
+
+    /* Countdown */
+    #countdown {
+      font-size: 22px;
+      margin-top: 10px;
+      color: #333;
+    }
+
+    /* Hearts */
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: float 5s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(100vh); }
+      to { transform: translateY(-10vh); }
+    }
+
+    /* Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+
+<body onclick="burstHearts(event)">
+
+<!-- LOGIN -->
+<div class="login">
+  <h2>🔐 Only for You ❤️</h2>
+  <input type="password" id="password" placeholder="Our secret 😉">
+  <br><br>
+  <button onclick="checkPassword()">Unlock</button>
+</div>
+
+<!-- CONTENT -->
+<div class="content" id="content">
+  <h1>Happy Birthday My Love ❤️</h1>
+
+  <div class="slideshow">
+    <img src="photo1.jpg" class="slide">
+    <img src="photo2.jpg" class="slide">
+    <img src="photo3.jpg" class="slide">
+  </div>
+
+  <p id="typing"></p>
+
+  <div id="countdown"></div>
+
+  <h2>Forever Yours 💍</h2>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <h2>🎁 Surprise!</h2>
+  <p>You are my today & all my tomorrows ❤️</p>
+</div>
+
+<!-- MUSIC -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  function checkPassword() {
+    if(document.getElementById("password").value === "love123") {
+      document.querySelector(".login").style.display = "none";
+      document.getElementById("content").style.display = "block";
+      document.getElementById("music").play();
+
+      startSlideshow();
+      startTyping();
+      floatingHearts();
+      startCountdown();
+
+      setTimeout(() => {
+        document.getElementById("popup").style.display = "block";
+      }, 15000);
+
+    } else {
+      alert("Wrong password 😜");
+    }
+  }
+
+  // Slideshow
+  let i = 0;
+  function startSlideshow() {
+    let slides = document.getElementsByClassName("slide");
+    setInterval(() => {
+      for(let s of slides) s.style.display = "none";
+      i = (i + 1) % slides.length;
+      slides[i].style.display = "block";
+    }, 2000);
+  }
+
+  // Typing
+  let msg = "You are my home, my happiness, my forever ❤️";
+  let j = 0;
+  function startTyping() {
+    function type() {
+      if(j < msg.length) {
+        document.getElementById("typing").innerHTML += msg[j];
+        j++;
+        setTimeout(type, 50);
+      }
+    }
+    type();
+  }
+
+  // Floating hearts
+  function floatingHearts() {
+    setInterval(() => {
+      let h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "❤️";
+      h.style.left = Math.random()*100 + "vw";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 5000);
+    }, 300);
+  }
+
+  // Click burst
+  function burstHearts(e) {
+    for(let k=0;k<8;k++) {
+      let h = document.createElement("div");
+      h.className = "heart";
+      h.innerHTML = "💖";
+      h.style.left = e.clientX + "px";
+      h.style.top = e.clientY + "px";
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 1000);
+    }
+  }
+
+  // Countdown (example: 1 hour)
+  function startCountdown() {
+    let time = 60; // seconds
+    setInterval(() => {
+      document.getElementById("countdown").innerHTML = "Special moment in: " + time + "s";
+      time--;
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>
